@@ -1,0 +1,19 @@
+[common]
+eth_jsonrpc_addr = "http://localhost:8545"
+
+[evmtx]
+gas_limit = 200000
+gas_price = 0
+sending_amt = 0 # in wei
+chain_id = 2200
+duration = "10m"
+tpu = 1000 # transaction per time unit
+time_unit = "1s"
+acc_num = 1000000
+scenario = "eth_transfer_to_known"
+
+[offchain_feeding]
+acc_num = 1000000
+bech_prefix="basechain"
+genesis_loc="/Users/denver/.basechaind/config/genesis.json"
+denom = "abasecoin"
