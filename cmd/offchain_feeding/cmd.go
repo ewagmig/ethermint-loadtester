@@ -20,9 +20,9 @@ const ONE_ETH = 1_000_000_000_000_000_000
 const EMPTY_CODEHASH = "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
 
 // TODO: Refactor this function to use for other chains, it is only for Ethermint based chain currently.
-func NewOffchainFeedingCmd(cfg Config) *cobra.Command {
+func NewEVMOSOffchainFeedingCmd(cfg Config) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "offchain_feeding",
+		Use:   "evmos offchain_feeding",
 		Short: "Create multiple 1 eth acconts on the genesis",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			genesisBz := readGenesis(cfg)
@@ -32,7 +32,7 @@ func NewOffchainFeedingCmd(cfg Config) *cobra.Command {
 
 			// add new accounts
 			wg := sync.WaitGroup{}
-			currentLatestAccNum, _ := strconv.Atoi(accs[len(accs)-1].BaseAccount.AccountNumber)
+			currentLatestAccNum, _ := strconv.Atoi(accs[len(accs)-1].AccountNumber)
 			accNum := currentLatestAccNum + 1
 			log.Info().Int("currentLatestAccNum", currentLatestAccNum).Int("cfg.AccNum", cfg.AccNum).Msg("creating new accounts")
 			for i := 0; i < cfg.AccNum; i++ {
@@ -80,7 +80,7 @@ type Account struct {
 
 func NewEVMOffchainFeedingCmd(cfg Config) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "offchain_feeding for EVM compatible chains",
+		Use:   "EVM offchain_feeding for EVM compatible chains",
 		Short: "Create multiple 1 eth acconts on the genesis",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			genesisBz := readGenesis(cfg)
@@ -192,13 +192,17 @@ func createAccountAndBalance(conf Config, acc *types.Account, accountNumber int)
 
 	ethAcc := EthAccount{
 		Type: "/ethermint.types.v1.EthAccount",
-		BaseAccount: BaseAccount{
-			Address:       bech32Address,
-			PubKey:        nil,
-			AccountNumber: strconv.Itoa(accountNumber),
-			Sequence:      "0",
-		},
-		CodeHash: EMPTY_CODEHASH, // eoa has no code
+		//BaseAccount: BaseAccount{
+		//	Address:       bech32Address,
+		//	PubKey:        nil,
+		//	AccountNumber: strconv.Itoa(accountNumber),
+		//	Sequence:      "0",
+		//},
+		Address:       bech32Address,
+		PubKey:        nil,
+		AccountNumber: strconv.Itoa(accountNumber),
+		Sequence:      "0",
+		//CodeHash:      EMPTY_CODEHASH, // eoa has no code
 	}
 	balance := Balance{
 		Address: bech32Address,

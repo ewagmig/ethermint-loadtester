@@ -13,7 +13,7 @@ acc_num = 10000
 scenario = "eth_transfer_to_known"
 
 [offchain_feeding]
-acc_num = 10000
-bech_prefix="basechain"
-genesis_loc="/Users/mingwang/.perf/config/genesis.json"
-denom = "abasecoin"
+acc_num = 10
+bech_prefix="evmos"
+genesis_loc="/Users/mingwang/.tmp-evmosd/config/genesis.json"
+denom = "aevmos"
