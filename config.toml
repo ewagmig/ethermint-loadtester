@@ -9,11 +9,11 @@ chain_id = 2200
 duration = "10m"
 tpu = 1000 # transaction per time unit
 time_unit = "1s"
-acc_num = 1000000
+acc_num = 10000
 scenario = "eth_transfer_to_known"
 
 [offchain_feeding]
-acc_num = 1000000
+acc_num = 10000
 bech_prefix="basechain"
-genesis_loc="/Users/denver/.basechaind/config/genesis.json"
+genesis_loc="/Users/mingwang/.perf/config/genesis.json"
 denom = "abasecoin"

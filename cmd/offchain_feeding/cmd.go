@@ -74,6 +74,44 @@ func NewOffchainFeedingCmd(cfg Config) *cobra.Command {
 	return cmd
 }
 
+type Account struct {
+	Balance string `json:"balance"`
+}
+
+func NewEVMOffchainFeedingCmd(cfg Config) *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "offchain_feeding for EVM compatible chains",
+		Short: "Create multiple 1 eth acconts on the genesis",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			genesisBz := readGenesis(cfg)
+			pkAccs, newAccs, newBals := make([]*types.Account, cfg.AccNum), make([]EthAccount, cfg.AccNum), make([]Balance, cfg.AccNum)
+
+			currentLatestAccNum := len(newAccs) - 1
+			accNum := currentLatestAccNum + 1
+			log.Info().Int("currentLatestAccNum", currentLatestAccNum).Int("cfg.AccNum", cfg.AccNum).Msg("creating new accounts")
+			for i := 0; i < cfg.AccNum; i++ {
+				acc := utils.CreateRandomAcc()
+				pkAccs[i] = acc
+				ethAcc, bal := createAccountAndBalance(cfg, acc, accNum)
+				newAccs[i], newBals[i] = ethAcc, bal
+
+				accHex := "0x" + acc.EthAddr.Hex()
+
+				genesisBz["alloc"].(map[string]interface{})[accHex] = &Account{Balance: strconv.Itoa(ONE_ETH)}
+				accNum++
+			}
+			log.Info().Msg("done creating new accounts")
+
+			// write private keys
+			utils.WritePrivateKeysToFile(pkAccs)
+
+			writeGenesis(cfg, genesisBz)
+			return nil
+		},
+	}
+	return cmd
+}
+
 func readGenesis(cfg Config) map[string]interface{} {
 	bz, err := os.ReadFile(cfg.GenesisLoc)
 	if err != nil {

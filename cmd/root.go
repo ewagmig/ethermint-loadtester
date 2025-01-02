@@ -42,5 +42,5 @@ func init() {
 	cfg := MustRead(DefaultConfigPath)
 	ethRpc := clients.NewFastClient(cfg.CommonConfig.EthJsonRpcAddr)
 	rootCmd.AddCommand(evmtx.NewEvmTxCmd(cfg.EvmTxConfig, ethRpc))
-	rootCmd.AddCommand(offchain_feeding.NewOffchainFeedingCmd(cfg.OffchainFeedingConfig))
+	rootCmd.AddCommand(offchain_feeding.NewEVMOffchainFeedingCmd(cfg.OffchainFeedingConfig))
 }
