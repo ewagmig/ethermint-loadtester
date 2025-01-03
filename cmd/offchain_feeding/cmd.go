@@ -32,7 +32,7 @@ func NewEVMOSOffchainFeedingCmd(cfg Config) *cobra.Command {
 
 			// add new accounts
 			wg := sync.WaitGroup{}
-			currentLatestAccNum, _ := strconv.Atoi(accs[len(accs)-1].AccountNumber)
+			currentLatestAccNum, _ := strconv.Atoi(accs[len(accs)-1].BaseAccount.AccountNumber)
 			accNum := currentLatestAccNum + 1
 			log.Info().Int("currentLatestAccNum", currentLatestAccNum).Int("cfg.AccNum", cfg.AccNum).Msg("creating new accounts")
 			for i := 0; i < cfg.AccNum; i++ {
@@ -192,17 +192,13 @@ func createAccountAndBalance(conf Config, acc *types.Account, accountNumber int)
 
 	ethAcc := EthAccount{
 		Type: "/ethermint.types.v1.EthAccount",
-		//BaseAccount: BaseAccount{
-		//	Address:       bech32Address,
-		//	PubKey:        nil,
-		//	AccountNumber: strconv.Itoa(accountNumber),
-		//	Sequence:      "0",
-		//},
-		Address:       bech32Address,
-		PubKey:        nil,
-		AccountNumber: strconv.Itoa(accountNumber),
-		Sequence:      "0",
-		//CodeHash:      EMPTY_CODEHASH, // eoa has no code
+		BaseAccount: BaseAccount{
+			Address:       bech32Address,
+			PubKey:        nil,
+			AccountNumber: strconv.Itoa(accountNumber),
+			Sequence:      "0",
+		},
+		CodeHash: EMPTY_CODEHASH, // eoa has no code
 	}
 	balance := Balance{
 		Address: bech32Address,

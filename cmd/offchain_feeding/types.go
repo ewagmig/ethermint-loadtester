@@ -9,13 +9,9 @@ type BaseAccount struct {
 
 // The EthAccount type would update according to the version of cosmos SDK
 type EthAccount struct {
-	Type string `json:"@type"`
-	//BaseAccount BaseAccount `json:"base_account"`
-	Address       string      `json:"address"`
-	PubKey        interface{} `json:"pub_key"`
-	AccountNumber string      `json:"account_number"`
-	Sequence      string      `json:"sequence"`
-	//CodeHash      string      `json:"code_hash"`
+	Type        string      `json:"@type"`
+	BaseAccount BaseAccount `json:"base_account"`
+	CodeHash    string      `json:"code_hash"`
 }
 
 type Coin struct {

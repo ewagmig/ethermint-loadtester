@@ -3,9 +3,9 @@ eth_jsonrpc_addr = "http://localhost:8545"
 
 [evmtx]
 gas_limit = 200000
-gas_price = 0
-sending_amt = 0 # in wei
-chain_id = 2200
+gas_price = 10
+sending_amt = 10 # in wei
+chain_id = 9000
 duration = "10m"
 tpu = 1000 # transaction per time unit
 time_unit = "1s"
