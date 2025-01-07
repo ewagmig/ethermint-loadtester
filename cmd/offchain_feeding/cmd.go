@@ -95,7 +95,7 @@ func NewEVMOffchainFeedingCmd(cfg Config) *cobra.Command {
 				ethAcc, bal := createAccountAndBalance(cfg, acc, accNum)
 				newAccs[i], newBals[i] = ethAcc, bal
 
-				accHex := "0x" + acc.EthAddr.Hex()
+				accHex := acc.EthAddr.Hex()
 
 				genesisBz["alloc"].(map[string]interface{})[accHex] = &Account{Balance: strconv.Itoa(ONE_ETH)}
 				accNum++

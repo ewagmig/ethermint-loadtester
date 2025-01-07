@@ -3,17 +3,17 @@ eth_jsonrpc_addr = "http://localhost:8545"
 
 [evmtx]
 gas_limit = 200000
-gas_price = 10
+gas_price = 1000000000
 sending_amt = 10 # in wei
 chain_id = 9000
 duration = "10m"
 tpu = 1000 # transaction per time unit
 time_unit = "1s"
 acc_num = 10000
-scenario = "eth_transfer_to_known"
+scenario = "eth_transfer_to_random"
 
 [offchain_feeding]
-acc_num = 10
+acc_num = 100000
 bech_prefix="evmos"
-genesis_loc="/Users/mingwang/.tmp-evmosd/config/genesis.json"
+genesis_loc="/Users/mingwang/Desktop/safe4_300M_genesis.json"
 denom = "aevmos"
